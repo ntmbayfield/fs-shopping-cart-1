@@ -10,7 +10,6 @@ function addItem (path, item) {
   fs.writeFileSync(path, text, { flag: 'a' })
   //{ flag: 'a' } in the above line this is an optional parameter which is an object, with three potential properties.  Flag is one of those properties, and the 'a' means - Open file for appending and the file is created if it does not exist.
 
-
 }
 
 function getItem (path, idx) {
@@ -29,13 +28,20 @@ function updateItem (path, idx, item) {
   //create current variable that will reference the item that's getting updated
   const current = fs.readFileSync(path, 'utf-8').split('\n');
   let itemToUpdate = current[idx-1];
+  console.log("item to update looks like," + itemToUpdate);
 
+  const arrOfObjProperties = itemToUpdate.split('\t');
 
   //then we need to modify the item name if necessary, and change the item quantity to the new amount using
   if (!itemToUpdate) {
     return null;
   }
-  const arrOfObjProperties = itemToUpdate.split('\t');
+
+  else if (arrOfObjProperties.length !==3) {
+    fs.writeFileSync(path)
+  }
+
+  else {
   //properties should look like [count, itemName, quantity]
   arrOfObjProperties[1] = '\t' + item.name + '\t';
   arrOfObjProperties[2] = item.quantity;
@@ -46,6 +52,7 @@ function updateItem (path, idx, item) {
 
   //then write the updated object using writeFileSync
   fs.writeFileSync(path, newShoppingList);
+  }
 }
 
 module.exports = {
