@@ -37,8 +37,8 @@ function updateItem (path, idx, item) {
     return null;
   }
 
-  else if (arrOfObjProperties.length !==3) {
-    fs.writeFileSync(path)
+  else if (!item.name || !item.quantity) {
+    return path
   }
 
   else {
